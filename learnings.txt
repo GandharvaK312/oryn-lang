@@ -74,7 +74,7 @@ so they used shortcuts and alternative paths to maintain minimal usage of memory
 
     Just-In-Time (JIT) Compiler: A dynamic optimization engine inside a Virtual Machine that monitors running bytecode, identifies the most
     frequently executed loops or functions ("hot spots"), and compiles them on the fly into native machine code to achieve near-C speeds while
-    the program is running.
+    the program is running. Not used by languages to get them compiled because excessive memory is used, startup delays, highly complex to build.
 
 compiling: Translating a source language into a completely different form.
 
@@ -88,3 +88,25 @@ compiling: Translating a source language into a completely different form.
     CPython is an interpreter because you run your program straight from the raw source text.Under the Hood:
     CPython contains a compiler that instantly translates that source text into an internal bytecode format before the VM executes it.
     The Verdict: CPython is an interpreter that uses a compiler inside it.
+
+operators and operands. Operands are the terms which will be added/subtracted/operated using opertors. Operators are the ones that actually tell 
+    what kind of operation should happend between two identifiers.
+
+    a +(/)*(/)-(/)/ b are all called infix operators as all expressions have operators between the operands.
+    a++ / a-- both are postfix where the operation is done after the operand.
+    ++a / --a both are prefix where the operation is done before the operand.
+    condition ? thenArm : elseArm ternary operator. also called mixfix.
+
+Bytecode and what it does?
+All languages even though they are written in a language you know that they need to be translated to machine understandable language. That work is done by compiler.
+c and c++(older legacy languages basically) have compilers that convert their language directly to machine language. That is why they compile super fast.
+Machine language is called Assembly. However, now it is very hard to make a language that is as fast because they are so many chips(hardware).
+There is amd, intel, snapdragon, etc. So machine assembly language is different for each chip. If you create a language now like C, you will have to write a
+different compiler for each chip set. So instead modern languages like Python and Java use soemthing called virtual machines(PVM and JVM).
+These languages' compilers, instead of converting language to assembly, open their own virtual machines(which also is coded in a language similar to assembly).
+Its called Bytecode. Assembly : physical chip :: bytecode : virtual machines. Each command for this VM takes up only one byte, hence the name.
+This eliminates the need to convert each language into machine language of each chip set.
+When you write code and hit run. All the code is first converted into Bytecode the VM can understand(process known as code generation),
+and then runs the code in that VM environment.
+
+Each line of the bytecode is one byte as told before, it also is called operation code or opcode
