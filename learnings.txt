@@ -1,0 +1,112 @@
+June 13, 2026
+
+This is where I will be writing whatever I have understood from the book.
+
+what a map of creating a language/implementation actually look like:
+
+var average = (min+max)/2;
+
+1. Scanning: lexical analysis/ lexing/ scanning.
+    if a line of code is written. the scanner breaks it up into chunks (whitespace) and makes it easier for the compiler to read it.
+    so the line of code would be:
+    |var| |average| |=| |(| |min| |+| |max| |)| |/| |2| |;|
+    each division is called a token. 
+    Comments, whitespaces are ignored by the language.
+
+2. Parsing: Basically distributes the tokens into trees (syntax trees, parse tree, abstract syntax trees, etc) So the trees are made
+     entirely on preference and priority of the token. larger priority, deeper the node.
+
+3. Static Analysis:
+    binding. Takes an identifier and checks if it exists anywhere else in the code. Checks if its a global or local variable (scope).
+    It also checks the type of the identifier if it matches or not. If not, throws a type error.
+    But this is all done when the code is fully written and run. This is basically done by the compiler.
+
+so whatever analysis is made gets stored as attributes(nodes) of the syntax tree. and whatever cannot be stored(no direct relation but
+still related to the nodes in some way) is stored on the side to lookup. In this table, only identifiers and variable names are stored.
+This table is called the symbol table. They essentially hold keys whose values tell us what those identifiers do.
+
+This whole table is stored into an entirely new data structure.
+
+Few more things I learnt:
+    Intermediate representation: acts basically like an API. it has all the ways the code written by a user needs to be represented so that the
+    memory can be managed properly.
+
+    Control Flow Graph(CFG) - after the programmer writes the code. The compiler breaks the code and builds the maps the way its supposed to be exec.
+
+    Static single assignment(SSA) - This is written inside the CFG. rewrites user-used variables multiple times so that variable names are used exactly once. so the names of the
+    variables are changed everytime when they attain a new value as version numbers so that the compiler can bind properly.
+
+    Continuation-passing style(CPS) - instead of returning/calling functions to/in other functions, functions naturally are called with a continuation
+    as parameters. these "continuation" have the rest of the code in them so that the call stack never goes up a level and finishes off everything in 
+    the same level. The call stack is reduced, however the heap memory is the one that's heavy since the "called" part is huge. Modern languages
+    are modified to better manage these heaps.
+
+
+
+June 14, 2026
+    Python, Java have Virtual machines of their own to actually compile their code. So what and why this is done is:
+    
+    There are so many kinds of chips/processors in the world. Intel, AMD famous once and their own versions. in that there are ARMs and x86 architecture
+    machines. 
+
+    A code generator(converts the flat stack of code into machine language) essentially converts all higher level code into machine language, and as 
+    surprising as it may seem, there are many machines in the world.
+
+    So instead of creating a build-specific code generator, the compiler just has a virtual machine (eg. Python virtual machine or Java virtual machine)
+    and generates bytecode in that. bytecode is similar to machine language but not the same.
+
+    so since the language is read by the virtual machine, language hackers dont have to create a machine language creater for all the builds.
+    These kind of virtual machines are called language virtual machines.
+
+Different types of compilers: There are different kinds of compilers. in the 80s, memory was too precious to use up so much during code compiling,
+so they used shortcuts and alternative paths to maintain minimal usage of memory while still executing code.
+
+    Single-Pass Compiler: A fast, low-memory compiler that reads source code text sequentially from top to bottom and generates output immediately
+    in one single go, without saving an intermediate syntax tree in memory. (This is why languages like C force you to use forward declarations,
+    so the compiler knows what a function looks like before it hits the line calling it)
+
+
+    Tree-Walk Compiler/Interpreter: A simple, high-memory engine that parses source code into a hierarchical Abstract Syntax Tree (AST), then
+    executes the program by literally walking through the branches of that tree node-by-node at runtime.
+
+    Transpiler (Source-to-Source Compiler): A translator that converts source code from one high-level language into another high-level language
+    (like TypeScript to JavaScript, or Python to C), rather than down to low-level bytecode or machine language.
+
+    Just-In-Time (JIT) Compiler: A dynamic optimization engine inside a Virtual Machine that monitors running bytecode, identifies the most
+    frequently executed loops or functions ("hot spots"), and compiles them on the fly into native machine code to achieve near-C speeds while
+    the program is running. Not used by languages to get them compiled because excessive memory is used, startup delays, highly complex to build.
+
+compiling: Translating a source language into a completely different form.
+
+    Compiler: Translates your source code into a new form but does not run it. The user must take that output and execute it manually
+    (e.g., GCC or Clang for C).
+    
+    Interpreter: Takes your raw source code and executes it immediately on the fly. The program runs directly "from source"
+    (e.g., early versions of Ruby).
+
+    Gray Area (Like CPython)The Mix: Many modern tools do both at the same time.How Python Works: From the user's perspective,
+    CPython is an interpreter because you run your program straight from the raw source text.Under the Hood:
+    CPython contains a compiler that instantly translates that source text into an internal bytecode format before the VM executes it.
+    The Verdict: CPython is an interpreter that uses a compiler inside it.
+
+operators and operands. Operands are the terms which will be added/subtracted/operated using opertors. Operators are the ones that actually tell 
+    what kind of operation should happend between two identifiers.
+
+    a +(/)*(/)-(/)/ b are all called infix operators as all expressions have operators between the operands.
+    a++ / a-- both are postfix where the operation is done after the operand.
+    ++a / --a both are prefix where the operation is done before the operand.
+    condition ? thenArm : elseArm ternary operator. also called mixfix.
+
+Bytecode and what it does?
+All languages even though they are written in a language you know that they need to be translated to machine understandable language. That work is done by compiler.
+c and c++(older legacy languages basically) have compilers that convert their language directly to machine language. That is why they compile super fast.
+Machine language is called Assembly. However, now it is very hard to make a language that is as fast because they are so many chips(hardware).
+There is amd, intel, snapdragon, etc. So machine assembly language is different for each chip. If you create a language now like C, you will have to write a
+different compiler for each chip set. So instead modern languages like Python and Java use soemthing called virtual machines(PVM and JVM).
+These languages' compilers, instead of converting language to assembly, open their own virtual machines(which also is coded in a language similar to assembly).
+Its called Bytecode. Assembly : physical chip :: bytecode : virtual machines. Each command for this VM takes up only one byte, hence the name.
+This eliminates the need to convert each language into machine language of each chip set.
+When you write code and hit run. All the code is first converted into Bytecode the VM can understand(process known as code generation),
+and then runs the code in that VM environment.
+
+Each line of the bytecode is one byte as told before, it also is called operation code or opcode
