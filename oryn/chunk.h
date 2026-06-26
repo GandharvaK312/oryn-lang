@@ -2,6 +2,7 @@
 #define clox_chunk_h
 
 #include "common.h"
+#include "value.h"
 
 typedef enum{
     
@@ -12,10 +13,10 @@ typedef enum{
 typedef struct{
 
     int count, capacity;
-    
     // a dynamic array used since we dont know how big the array is going to be, difference from a normal array is that it has capacity(total declared) and count(how much is in use).
     // so basically whenever the count seems to exceed the capacity, the capacity is doubled and a new array with double the capacity is allocated with existing elements
     uint8_t* code;
+    ValueArray constants;
 
 } Chunk;
 
