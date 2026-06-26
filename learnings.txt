@@ -110,3 +110,13 @@ When you write code and hit run. All the code is first converted into Bytecode t
 and then runs the code in that VM environment.
 
 Each line of the bytecode is one byte as told before, it also is called operation code or opcode
+
+
+so chunk is a sequence of a bytecode. It is just a dyamic array of bytes that holds an instruction or an operand.
+    return 1
+    return is the instruction. 1 is the operand.
+
+so for this we have chosen initial size of array as 8. Initially the array is empty and holds nothing. as and when instructions
+are passed, the count of bytes in the array grows. when size of array is 1 less then than the current index of the array, that is
+when grow capacity is triggered. It basically grows the max size of the array whenever it is triggered. Then there comes grow array
+it actually reallocates all the elements from the old array to the new bigger array, and so the array is ever growing.
