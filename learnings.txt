@@ -120,3 +120,13 @@ so for this we have chosen initial size of array as 8. Initially the array is em
 are passed, the count of bytes in the array grows. when size of array is 1 less then than the current index of the array, that is
 when grow capacity is triggered. It basically grows the max size of the array whenever it is triggered. Then there comes grow array
 it actually reallocates all the elements from the old array to the new bigger array, and so the array is ever growing.
+
+built a disassembler. Basically translates bytecode back into human readable format. This is mainly used by the VM author to understand what his bytecode-converted code
+actually does. Basically you init a chunk with an OP_CODE. this op code is the resultant of another action.
+
+so I will start from the innermost function
+simpleInstruction initially prints whatever name is passed into it and increases offset(index) bye one.
+disassembleInstruction first prints the offset (index), since its zero indexed array.
+and then accesses the element at offset from the code array of the chunk and then compares with enum elements and  for time being we have passed OP_RETURN into
+simpleInstruction to check how it works and then the offset so we see the OP_RETURN text. and for now if it doesn't match, it will give unknown code display
+I think OP_RETURN here in the code initially has 0000 as offset because it is the only one declared in enum for now.
