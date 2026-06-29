@@ -121,6 +121,7 @@ are passed, the count of bytes in the array grows. when size of array is 1 less 
 when grow capacity is triggered. It basically grows the max size of the array whenever it is triggered. Then there comes grow array
 it actually reallocates all the elements from the old array to the new bigger array, and so the array is ever growing.
 
+26-06-2026
 built a disassembler. Basically translates bytecode back into human readable format. This is mainly used by the VM author to understand what his bytecode-converted code
 actually does. Basically you init a chunk with an OP_CODE. this op code is the resultant of another action.
 
